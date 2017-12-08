@@ -4,7 +4,8 @@
   "description": "calculate products average weight",
   "main": "app.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha"
+    "test": "node node_modules/mocha/bin/mocha",
+    "start": "node src/app"
   },
   "author": "shuchengc",
   "license": "ISC",
