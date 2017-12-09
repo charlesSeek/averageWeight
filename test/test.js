@@ -194,7 +194,7 @@ describe('calculate products average weigh',function(){
 			})
 			const totalWeight = weights.reduce((accumulator, currentValue) => accumulator + currentValue);
 			const averageWeight = totalWeight/(weights.length);
-			expect(averageWeight).equals(0.045)
+			expect(averageWeight).equals(1.125)
 			done();
 		}catch(err){
 			done(err)

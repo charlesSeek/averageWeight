@@ -49,8 +49,7 @@ class Production {
 		const length = this.size.length||0;
 		const width = this.size.width||0;
 		const height = this.size.height||0;
-		const weight = this.weight||0;
-		return length*width*height*weight/(100*100*100);
+		return length*width*height*250/(100*100*100);
 	}
 }
 module.exports = Production;

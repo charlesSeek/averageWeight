@@ -1,3 +1,8 @@
+let allProducts = [];
+const url = 'http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com'
+const axios = require('axios');
+
+
 /**
  * get all productions by category
  * @param  {String} category    production category
@@ -24,5 +29,37 @@ module.exports.filterProductionsByValidation = function(productions){
 			&& typeof product.size.length === 'number' && product.size.length >=0
 			&& typeof product.size.height === 'number' && product.size.height >=0
 			&& typeof product.size.width === 'number' && product.size.width >=0
+	})
+}
+
+/**
+ * iterative access APIs to get all products
+ * @param  {String}   uri API URI
+ * @param  {Function} cb  callback function
+ * @return {Function}       callback function
+ */
+module.exports.getAllProducts = function(uri,cb){
+	iterativeGet(uri,(err,products)=>{
+		if (err){
+			return cb(err);
+		}
+		return cb(null,products);
+	})
+}
+function iterativeGet(uri,callback){
+	const apiUrl = url + uri;
+	axios.get(apiUrl)
+	.then(res=>{
+		const objects = res.data.objects||[];
+		const next = res.data.next;
+		allProducts = allProducts.concat(objects);
+		if (!next){
+			return callback(null,allProducts);
+		}else {
+			iterativeGet(next,callback)
+		}
+	})
+	.catch(err=>{
+		return callback(err);
 	})
 }

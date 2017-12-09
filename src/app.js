@@ -3,9 +3,11 @@ const axios = require('axios');
 const utils = require('./utils');
 const URL = 'http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com/api/products/1';
 
-axios.get(URL)
-.then(res=>{
-	const products = res.data.objects||[];
+utils.getAllProducts('/api/products/1',(err,data)=>{
+	if (err){
+		console.log(err)
+	}
+	const products = data;
 	//get all products of air conditioners category
 	const airConditionerProducts = utils.getProductionByCategory('Air Conditioners',products);
 	//filter products by validation check
@@ -15,6 +17,7 @@ axios.get(URL)
 		const product = new Production(item);
 		return product.calWeight();
 	})
+	console.log('weights:',weights);
 	if (weights == 0){
 		console.log('can not find any air conditioners');
 	}else {
@@ -23,6 +26,4 @@ axios.get(URL)
 		console.log(`air conditioners average weight:${averageWeight} kg`);
 	}
 })
-.catch(err=>{
-	console.log('error:',err);
-})
+
